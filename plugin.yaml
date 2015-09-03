@@ -6,7 +6,7 @@
 # for the lifecycle operation.
 ################################################################
 imports:
-  - /Users/kemi/Documents/Development/cloudify-package-installer-plugin/plugin.yaml
+  - https://raw.githubusercontent.com/kemiz/cloudify-package-installer-plugin/master/plugin.yaml
 
 plugins:
   mongo_plugin:
