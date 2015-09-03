@@ -6,7 +6,7 @@
 # for the lifecycle operation.
 ################################################################
 plugins:
-  mongo_plugin:
+  mongodb_plugin:
     executor: host_agent
     source: https://github.com/kemiz/mongodb-plugin-cfy/archive/master.zip
 
@@ -63,4 +63,4 @@ relationships:
     target_interfaces:
       cloudify.interfaces.relationship_lifecycle:
         postconfigure:
-          implementation: mongo_plugin.mongo_plugin.tasks.set_url
+          implementation: mongodb_plugin.mongodb_plugin.tasks.set_url
