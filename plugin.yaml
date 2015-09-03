@@ -8,7 +8,7 @@
 plugins:
   mongo_plugin:
     executor: host_agent
-    source: https://github.com/kemiz/mongo_plugin/archive/master.zip
+    source: https://github.com/kemiz/mongodb-plugin-cfy/archive/master.zip
 
 node_types:
 
