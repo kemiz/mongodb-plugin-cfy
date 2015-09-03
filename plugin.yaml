@@ -1,0 +1,69 @@
+################################################################
+# Blueprint node types.
+#
+# specific new types for the nodecellar app.
+# these types are mapped to scripts that are resposible
+# for the lifecycle operation.
+################################################################
+imports:
+  - /Users/kemi/Documents/Development/cloudify-package-installer-plugin/plugin.yaml
+
+plugins:
+  mongo_plugin:
+    executor: host_agent
+    source: https://github.com/kemiz/tomcat-plugin-cfy3/archive/master.zip
+
+node_types:
+
+  ##################################################################################
+  # MongoDB Type
+  # MongoDB type that can be used to install and control an MongoDB node.
+  # The implementation uses: "sudo service <service_name> start / stop / restart"
+  # to control the service operation
+  ##################################################################################
+
+  cloudify.nodes.MongoDB:
+    derived_from: cloudify.nodes.ServiceInstaller
+    properties:
+      service_name:
+        default: 'mongod'
+      version:
+        default: '3.0'
+      mongo_config:
+        default:
+          external_config_file:
+          port: 27017
+      config:
+        default:
+          package_list:
+            - 'mongodb-org'
+          custom_repo:
+            name: 'mongodb-org-3.0'
+            yum:
+              name: 'mongodb-org-3.0'
+              entry: '[mongodb-org-3.0]
+                      name=MongoDB Repository
+                      baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.0/x86_64/
+                      gpgcheck=0
+                      enabled=1'
+            apt:
+              key_server: 'hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10'
+              entry: 'deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse'
+
+
+relationships:
+
+  ###########################################################
+  # This relationship is responsible for setting the mongo
+  # host ip on the source node as a runtime property.
+  #
+  # This will enable the source node to locate the mongo
+  # database.
+  ###########################################################
+
+  connected_to_mongo:
+    derived_from: cloudify.relationships.connected_to
+    target_interfaces:
+      cloudify.interfaces.relationship_lifecycle:
+        postconfigure:
+          implementation: mongo_plugin.mongo_plugin.tasks.set_url
