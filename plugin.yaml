@@ -48,30 +48,6 @@ node_types:
               entry: 'deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse'
 
 
-  ##################################################################################
-  # AppServer Type
-  # AppServer type that can be used to install and control an AppServer node.
-  # The implementation uses: "sudo service <service_name> start / stop / restart"
-  # to control the service operation
-  ##################################################################################
-
-  cloudify.nodes.appserver:
-    derived_from: cloudify.nodes.ServiceInstaller
-    properties:
-      service_name:
-        default: 'appserver'
-      version:
-        default: '3.0'
-      mongo_config:
-        default:
-          external_config_file:
-          port: 27017
-      config:
-        default:
-          package_list:
-            - 'https://github.com/appserver-io/appserver/releases/download/1.0.6/appserver-dist-1.0.6-12.el7.centos.x86_64.rpm'
-            - 'https://github.com/appserver-io/appserver/releases/download/1.0.6/appserver-dist_1.0.6-13.deb8_amd64.deb'
-
 relationships:
 
   ###########################################################
