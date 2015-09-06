@@ -1,6 +1,7 @@
 from cloudify import exceptions, ctx
 from cloudify.decorators import operation
 from package_installer_plugin.utils import run
+from package_installer_plugin.tasks import install_packages
 
 __author__ = 'kemi'
 
@@ -19,3 +20,10 @@ def set_url(**_):
         )
     except Exception as e:
         raise exceptions.RecoverableError('Failed to set mongo ip & port')
+
+
+@operation
+def install_pymongo(**_):
+    """ Installs pymongo required for Diamond monitoring """
+
+    install_packages(['pymongo'])

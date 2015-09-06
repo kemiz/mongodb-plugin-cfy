@@ -6,6 +6,7 @@
 # for the lifecycle operation.
 ################################################################
 plugins:
+
   mongodb_plugin:
     executor: host_agent
     source: https://github.com/kemiz/mongodb-plugin-cfy/archive/master.zip
@@ -46,7 +47,29 @@ node_types:
             apt:
               key_server: 'hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10'
               entry: 'deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse'
+    interfaces:
+      cloudify.interfaces.lifecycle:
 
+        ###########################################################
+        # The MongoDBCollector depends on a python library called
+        # pymongo. We install this library in the 'configure'
+        # lifecycle hook of this node.
+        ###########################################################
+
+        configure: mongodb_plugin.mongodb_plugin.tasks.install_pymongo
+
+      ###########################################################
+      # Additional collector to collect data on the MongoDB.
+      ###########################################################
+
+      cloudify.interfaces.monitoring:
+        start:
+          implementation: diamond.diamond_agent.tasks.add_collectors
+          inputs:
+            collectors_config:
+              MongoDBCollector:
+                config:
+                  hosts: { concat: [ 'localhost:', { get_property: [ SELF, mongo_config, port ] } ] }
 
 relationships:
 
