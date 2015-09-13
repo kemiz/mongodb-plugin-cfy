@@ -11,6 +11,10 @@ plugins:
     executor: host_agent
     source: https://github.com/kemiz/mongodb-plugin-cfy/archive/master.zip
 
+  diamond:
+    executor: host_agent
+    source: https://github.com/cloudify-cosmo/cloudify-diamond-plugin/archive/1.2.zip
+
 node_types:
 
   ##################################################################################
@@ -62,14 +66,14 @@ node_types:
       # Additional collector to collect data on the MongoDB.
       ###########################################################
 
-      cloudify.interfaces.monitoring:
-        start:
-          implementation: diamond.diamond_agent.tasks.add_collectors
-          inputs:
-            collectors_config:
-              MongoDBCollector:
-                config:
-                  hosts: { concat: [ 'localhost:', { get_property: [ SELF, mongo_config, port ] } ] }
+#      cloudify.interfaces.monitoring:
+#        start:
+#          implementation: diamond.diamond_agent.tasks.add_collectors
+#          inputs:
+#            collectors_config:
+#              MongoDBCollector:
+#                config:
+#                  hosts: { concat: [ 'localhost:', { get_property: [ SELF, mongo_config, port ] } ] }
 
 relationships:
 
