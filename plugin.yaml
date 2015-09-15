@@ -62,14 +62,14 @@ node_types:
       # Additional collector to collect data on the MongoDB.
       ###########################################################
 
-#      cloudify.interfaces.monitoring:
-#        start:
-#          implementation: diamond.diamond_agent.tasks.add_collectors
-#          inputs:
-#            collectors_config:
-#              MongoDBCollector:
-#                config:
-#                  hosts: { concat: [ 'localhost:', { get_property: [ SELF, mongo_config, port ] } ] }
+      cloudify.interfaces.monitoring:
+        start:
+          implementation: diamond.diamond_agent.tasks.add_collectors
+          inputs:
+            collectors_config:
+              MongoDBCollector:
+                config:
+                  hosts: { concat: [ 'localhost:', { get_property: [ SELF, mongo_config, port ] } ] }
 
 relationships:
 
