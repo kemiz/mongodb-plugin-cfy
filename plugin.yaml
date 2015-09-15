@@ -11,10 +11,6 @@ plugins:
     executor: host_agent
     source: https://github.com/kemiz/mongodb-plugin-cfy/archive/master.zip
 
-  diamond:
-    executor: host_agent
-    source: https://github.com/cloudify-cosmo/cloudify-diamond-plugin/archive/1.2.zip
-
 node_types:
 
   ##################################################################################
