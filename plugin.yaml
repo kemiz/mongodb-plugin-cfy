@@ -47,16 +47,16 @@ node_types:
             apt:
               key_server: 'hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10'
               entry: 'deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse'
-    interfaces:
-      cloudify.interfaces.lifecycle:
-
-        ###########################################################
-        # The MongoDBCollector depends on a python library called
-        # pymongo. We install this library in the 'configure'
-        # lifecycle hook of this node.
-        ###########################################################
-
-        configure: mongodb_plugin.mongodb_plugin.tasks.install_pymongo
+#    interfaces:
+#      cloudify.interfaces.lifecycle:
+#
+#        ###########################################################
+#        # The MongoDBCollector depends on a python library called
+#        # pymongo. We install this library in the 'configure'
+#        # lifecycle hook of this node.
+#        ###########################################################
+#
+#        configure: mongodb_plugin.mongodb_plugin.tasks.install_pymongo
 
 relationships:
 
